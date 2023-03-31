@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-5  py-16">
-       <h2 class="capitalize text-3xl font-extrabold">Cast</h2>
+       <h2 class="capitalize text-3xl font-extrabold">Images</h2>
  
        <div class="grid grid-cols-5">
          <div>

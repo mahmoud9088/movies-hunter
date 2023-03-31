@@ -1,9 +1,9 @@
 <template>
   <div class="flex gap-40 py-16 border-b-2 border-gray-500">
-    <img src="@/assets/images/joker.jpg" class="max-w-md" />
+    <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" class="max-w-md" />
 
     <div class="flex flex-col gap-5">
-      <h2 class="capitalize text-2xl font-extrabold">Movie Name</h2>
+      <h2 class="capitalize text-2xl font-extrabold">{{ movie?.title }}</h2>
 
       <div>
         <div class="flex gap-1 pb-1">
@@ -15,20 +15,17 @@
               />
             </g>
           </svg>
-          <span class="font-normal"> 47% | 2020-05-10 </span>
+          <span class="font-normal"> 47% | {{movie?.release_date}} </span>
         </div>
         <span class="text-sm text-gray-400 font-thin">
-          Lorem, ipsum, dolor sit amet.
+          <span v-for="(genre , index) in movie.genres" :key="genre.id">{{ genre?.name }}
+          <span v-if="(index != movie.genres.length-1)">, </span>
+          </span>
         </span>
       </div>
 
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti, sed.
-        Doloremque adipisci error veritatis, facilis sapiente nam minus labore
-        rem animi dolore consectetur, tenetur quisquam temporibus
-        necessitatibus. Voluptatum est, quisquam modi dolor a amet et animi
-        tenetur veritatis dolores, iusto optio autem porro dicta ab quas debitis
-        eligendi error? Nisi!
+       {{ movie?.overview }}
       </p>
 
       <div>
@@ -73,5 +70,6 @@
 <script>
 export default {
   name: 'movie-description',
+  props:["movie"]
 }
 </script>

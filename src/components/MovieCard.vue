@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-link :to="movieRoute">
+        <router-link :to="`/movie/${this.movie?.id}`">
             <img :src="movieImageSrc" class="rounded-md hover:opacity-75 transition duration-150" />
         </router-link>
 
@@ -38,9 +38,7 @@
           movieImageSrc: function(){
             return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
           },
-          movieRoute: function(){
-            return `/movie/${this.movie?.id}`
-          },
+       
           // movieGenresByIds:function(){
           //   console.log(genreId)
 
