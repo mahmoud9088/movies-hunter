@@ -2,7 +2,7 @@
   <div class="mx-5 my-10">
     <MovieDescription :movie="movie" />
     <MovieCast :cast="movie?.credits?.cast" />
-    <MovieImages />
+    <MovieImages :images="movie?.images?.backdrops" />
   </div>
 </template>
 
