@@ -21,9 +21,20 @@ export default {
     },
     components: { MovieDescription, MovieCast, MovieImages },
     async mounted(){
-      const {data} = await axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.id}?append_to_response=credits,videos,images&&api_key=61c5f9dd2a10497373373801b47bc1c2`)
-      console.log(data)
-      this.movie = data
+      this.fetchMovie()
+    },
+    methods:{
+      fetchMovie: async function(){
+        const {data} = await axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.id}?append_to_response=credits,videos,images&&api_key=61c5f9dd2a10497373373801b47bc1c2`)
+        this.movie = data
+      }
+    },
+    watch:{
+      '$route.params.id'() {
+        this.fetchMovie()
+      }
     }
+
+
 }
 </script>

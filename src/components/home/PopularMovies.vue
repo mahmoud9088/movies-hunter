@@ -17,7 +17,9 @@ export default {
     data:function(){
         return{
             movies:[],
-            genres:[]
+            genres:[],
+            currentPage: 1,
+            scrollTimer: null
         }
     },
     components:{
@@ -26,9 +28,9 @@ export default {
     methods:{
         getPopularMovies: async function(){
             try {
-                const {data} = await axios.get("https://api.themoviedb.org/3/movie/popular?api_key=61c5f9dd2a10497373373801b47bc1c2")
+                const {data} = await axios.get(`https://api.themoviedb.org/3/movie/popular?page=${this.currentPage}&&api_key=61c5f9dd2a10497373373801b47bc1c2`)
                 console.log(data)
-                this.movies = data.results
+                this.movies = [...this.movies , ...data.results]
             } catch (error) {
                 console.log(error)
                 
@@ -43,13 +45,37 @@ export default {
                 console.log(error)
                 
             }
-        }
+        },
+        handleScroll() {
+    clearTimeout(this.scrollTimer);
+    this.scrollTimer = setTimeout(() => {
+      let bottomOfPage = false;
+      if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+        bottomOfPage = true;
+      }
+      // Do something if you've reached the bottom of the page
+      if (bottomOfPage) {
+        console.log('You have reached the bottom of the page!');
+        this.currentPage += 1
+      }
+    }, 200); // Set a delay of 200 milliseconds
+  }
+      
     },
     mounted: function() {  
             // const res = await client.get("/movie/popular")
             this.getPopularMovies()
             this.getAllGenres()
-        
+            window.addEventListener('scroll', this.handleScroll);
     },
+    watch:{
+        currentPage: function () {
+            this.getPopularMovies()
+        }
+    },
+    beforeUnmount() {
+  window.removeEventListener('scroll', this.handleScroll);
+  clearTimeout(this.scrollTimer);
+},
 }
 </script>

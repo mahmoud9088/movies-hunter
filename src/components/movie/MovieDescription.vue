@@ -17,7 +17,7 @@
           <span class="font-normal"> 47% | {{movie?.release_date}} </span>
         </div>
         <span class="text-sm text-gray-400 font-thin">
-          <span v-for="(genre , index) in movie.genres" :key="genre.id">{{ genre?.name }}
+          <span v-for="(genre , index) in movie.genres" :key="index">{{ genre?.name }}
           <span v-if="(index != movie.genres.length-1)">, </span>
           </span>
         </span>
@@ -65,7 +65,7 @@
       </div>
     </div>
   </div>
-  <MediaModal v-model:openModal="openModal" @closeModal="toggleModal" :media="`https://www.youtube.com/embed/${movie?.videos?.results[0].key}`"/>
+  <MediaModal v-model:openModal="openModal" @closeModal="toggleModal" :media="`https://www.youtube.com/embed/${movie?.videos?.results[0]?.key}`"/>
 </template>
 
 <script>
@@ -75,7 +75,7 @@ export default {
     name: "movie-description",
     data: function() {
       return {
-        openModal: true
+        openModal: false
       }
       
     },

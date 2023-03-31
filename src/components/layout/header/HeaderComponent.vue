@@ -33,7 +33,7 @@
                      class="bg-transparent focus:outline-none"
                       @input="debounceSearch"
                        /> -->
-                       <input placeholder="search..."
+                       <input ref="searchRef" placeholder="search..."
                      class="bg-transparent focus:outline-none"
                       v-model="search"
                        />
@@ -73,11 +73,28 @@ import axios from 'axios';
                 searchedMovies:[]
             }
         },
+        mounted: function(){
+            this.handleKeyboardEvents()
+        },
         watch:{
             search: async function(v){
                 const {data} = await axios.get("https://api.themoviedb.org/3/search/movie?api_key=61c5f9dd2a10497373373801b47bc1c2&&query=" + v)
                 console.log(data)
                 this.searchedMovies = data?.results 
+            }
+        },
+        methods:{
+            handleKeyboardEvents: function(){
+                window.addEventListener("keydown" , (e)=>{
+                    if(e.key == "Escape"){
+                        this.searchedMovies = []
+                        this.search = ""
+                    }
+                    if(e.keyCode == 16){
+                        this.$refs.searchRef.focus()
+                    }
+                    // console.log(e.keyCode)
+                })
             }
         }
     }
