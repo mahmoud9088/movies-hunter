@@ -1,7 +1,6 @@
 <template>
   <div class="flex gap-40 py-16 border-b-2 border-gray-500">
     <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" class="max-w-md" />
-
     <div class="flex flex-col gap-5">
       <h2 class="capitalize text-2xl font-extrabold">{{ movie?.title }}</h2>
 
@@ -46,6 +45,7 @@
       <div class="flex gap-5 mt-7">
         <button
           class="inline-flex gap-2 rounded px-10 py-5 bg-yellow-500 text-black font-semibold"
+        @click="openModal = true"
         >
           <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
             <path d="M0 0h24v24H0z" fill="none" />
@@ -65,11 +65,26 @@
       </div>
     </div>
   </div>
+  <MediaModal v-model:openModal="openModal" @closeModal="toggleModal" :media="`https://www.youtube.com/embed/${movie?.videos?.results[0].key}`"/>
 </template>
 
 <script>
+import MediaModal from '../modals/MediaModal.vue';
+
 export default {
-  name: 'movie-description',
-  props:["movie"]
+    name: "movie-description",
+    data: function() {
+      return {
+        openModal: true
+      }
+      
+    },
+    props: ["movie"],
+    components: { MediaModal },
+    methods:{
+      toggleModal: function (value) {
+        this.openModal = value
+      }
+    }
 }
 </script>
