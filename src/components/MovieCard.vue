@@ -1,11 +1,11 @@
 <template>
     <div>
-        <router-link to="/movie/11">
-            <img src="@/assets/images/joker.jpg" class="rounded-md hover:opacity-75 transition duration-150" />
+        <router-link :to="movieRoute">
+            <img :src="movieImageSrc" class="rounded-md hover:opacity-75 transition duration-150" />
         </router-link>
 
         <div class="py-2">
-          <h4 class="capitalize text-lg pb-2">movie name</h4>
+          <h4 class="capitalize text-lg pb-2">{{movie?.title}}</h4>
           <div class="flex gap-1 pb-1">
             <svg class="fill-current text-yellow-500 w-4" viewBox="0 0 24 24">
               <g data-name="Layer 2">
@@ -16,10 +16,10 @@
               </g>
             </svg>
 
-            <span class="font-normal"> 47% | 2020-05-10 </span>
+            <span class="font-normal"> {{movie?.vote_average * 10}}% | {{movie?.release_date}} </span>
           </div>
           <p class="text-sm text-gray-400 font-thin">
-            Lorem ipsum dolor sit amet.
+            <span v-for="(genreId , index) in movie.genre_ids" :key="genreId">{{ movieGenresByIds(genreId , index) }}</span>          
           </p>
         </div>
     </div>
@@ -27,6 +27,36 @@
 
 <script>
     export default {
-        name: "movie-card"
+        name: "movie-card",
+//         data:function(){
+// return{
+//   movieGenres:[]
+// }
+//         },
+        props:["movie" , "genres"],
+        computed:{
+          movieImageSrc: function(){
+            return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
+          },
+          movieRoute: function(){
+            return `/movie/${this.movie?.id}`
+          },
+          // movieGenresByIds:function(){
+          //   console.log(genreId)
+
+          //   return genreId
+          // }
+          
+        },
+        methods:{
+          movieGenresByIds:function(genreId , index){
+            const movieGenre = this.genres.find(({id})=>id === genreId)
+            // console.log("hejjjjj", this.genres)
+            return index === this.movie.genre_ids.length -1 ? `${movieGenre?.name}`:`${movieGenre?.name}, `
+          }
+        },
+        mounted(){
+          console.log(this.genres , 'genresgenresgenresgenres')
+        }
     }
 </script>
