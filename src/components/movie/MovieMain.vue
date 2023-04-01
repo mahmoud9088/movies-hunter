@@ -30,8 +30,15 @@ export default {
       }
     },
     watch:{
-      '$route.params.id'() {
-        this.fetchMovie()
+      // '$route.params.id'() {
+      //   this.fetchMovie()
+      // }
+
+      // another way
+      '$route.params.id': {
+        handler() {
+          this.fetchMovie()
+        }
       }
     }
 

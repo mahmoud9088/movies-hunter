@@ -53,7 +53,18 @@
                    </ul>
                 </div>
             </div>
-            <img src="@/assets/images/avatar.jpg" class="rounded-full w-[40px] h-[40px]" />
+            <div class="relative">
+                
+                <img @click="openProfileModal = true" src="@/assets/images/avatar.jpg" class="rounded-full w-[40px] h-[40px] cursor-pointer" />
+
+                <ul v-show="openProfileModal" class="absolute top-12 right-0 bg-white rounded-md shadow-sm z-50 min-w-[150px] text-center overflow-hidden">
+                    <li class="text-gray-500 p-2 cursor-pointer hover:bg-green-300">Profile</li>
+                    <li class="text-gray-500 p-2 cursor-pointer hover:bg-green-300">Help</li>
+                    <li class="text-gray-500 p-2 cursor-pointer hover:bg-green-300">Logout</li>
+                </ul>
+
+           </div>
+            <span v-if="openProfileModal" @click="openProfileModal = false" class="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-50"></span>
         </div>
     </header>
 </template>
@@ -70,7 +81,8 @@ import axios from 'axios';
         data: function(){
             return {
                 search: "",
-                searchedMovies:[]
+                searchedMovies:[],
+                openProfileModal: false
             }
         },
         mounted: function(){

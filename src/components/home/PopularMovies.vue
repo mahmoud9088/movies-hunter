@@ -30,7 +30,9 @@ export default {
             try {
                 const {data} = await axios.get(`https://api.themoviedb.org/3/movie/popular?page=${this.currentPage}&&api_key=61c5f9dd2a10497373373801b47bc1c2`)
                 console.log(data)
-                this.movies = [...this.movies , ...data.results]
+                // this.movies = [...this.movies , ...data.results]
+                // or you can use push method
+                this.movies.push(...data.results)
             } catch (error) {
                 console.log(error)
                 
